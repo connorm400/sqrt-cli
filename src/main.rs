@@ -5,7 +5,7 @@ use std::env::args;
 use std::process;
 
 fn main() {
-    let accuracy = match handle_arguments() {
+    let accuracy = match parse_arguments() {
         Some(Ok(n)) => n,
         Some(Err(_e)) => {
             eprintln!("error parsing -a flag: {_e:?}");
@@ -42,7 +42,7 @@ fn main() {
 }
 
 // I don't know if this is the worst code I've ever written or the best
-fn handle_arguments() -> Option<Result<u32, ParseIntError>> {
+fn parse_arguments() -> Option<Result<u32, ParseIntError>> {
     args().enumerate()
         .find(|(_, x)| *x == "-a".to_owned())
         .and_then(|(i, _)| {

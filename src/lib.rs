@@ -1,9 +1,5 @@
 /// figures out the square root of a number to a certain number of digits (accuracy.)
-/// 
-/// # panics
-/// this function will panic if the accuracy is less than 0.
 pub fn sqrt_aprox(n: f64, accuracy: u32) -> f64 {
-    assert!(accuracy > 0);
     let mut guess = n / 2.0;
     let accuracy = 10_f64.powi(0 - accuracy as i32);
 

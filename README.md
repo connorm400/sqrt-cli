@@ -10,6 +10,8 @@ the number to square root should be piped in throught standard input. Set the # 
 of accuracy with the `-a` flag.
 
 ```sh
-$ echo "2" | sqrt-cli -a 10
+$ touch answer.txt
+$ echo "2" | sqrt -a 10 > answer.txt
+$ cat answer.txt
 1.4142135623746899
 ```

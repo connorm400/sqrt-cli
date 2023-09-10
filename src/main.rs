@@ -5,6 +5,7 @@ use std::env::args;
 use std::process;
 
 fn main() {
+    // error and exit if there isn't a -a flag or it has a bad number
     let accuracy = match parse_arguments() {
         Some(Ok(n)) => n,
         Some(Err(_e)) => {
@@ -17,10 +18,12 @@ fn main() {
         }
     };
 
+    // read piped stdin
     let mut number = String::new();
     stdin().read_line(&mut number).expect("error reading stdin");
     number = number.trim().to_owned();
 
+    // parse piped number to become a float
     let number = match number.parse::<f64>() {
         Ok(n) => n,
         Err(_e) => {
@@ -42,6 +45,10 @@ fn main() {
 }
 
 // I don't know if this is the worst code I've ever written or the best
+// it'll look at all the arguments, find a -a flag, see if there is a
+// number to parse and try to parse it. It'll return none if it can't find
+// -a or the following number, and will return Some(Err(ParseIntError)) if the
+// "number" wont parse to a unsigned int
 fn parse_arguments() -> Option<Result<u32, ParseIntError>> {
     args().enumerate()
         .find(|(_, x)| *x == "-a".to_owned())

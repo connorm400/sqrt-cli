@@ -54,7 +54,7 @@ fn parse_arguments() -> Option<Result<u32, ParseIntError>> {
         .find(|(_, x)| *x == "-a".to_owned())
         .and_then(|(i, _)| {
             args().nth(i + 1).and_then(|n| {
-                Some(n.parse::<u32>().map_err(|e| return e))
+                Some(n.parse::<u32>())
             })
         })
 }

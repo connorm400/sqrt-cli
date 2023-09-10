@@ -1,12 +1,10 @@
-use sqrt_cli::sqrt_aprox;
+use sqrt_cli::{sqrt_aprox, parse_arguments};
 use std::io::stdin;
-use std::num::ParseIntError;
-use std::env::args;
 use std::process;
 
 fn main() {
     // error and exit if there isn't a -a flag or it has a bad number
-    let accuracy = match parse_arguments() {
+    let accuracy = match parse_arguments::<u32>("-a") {
         Some(Ok(n)) => n,
         Some(Err(_e)) => {
             eprintln!("error parsing -a flag: {_e:?}");
@@ -42,19 +40,4 @@ fn main() {
     );
 
     process::exit(0)
-}
-
-// I don't know if this is the worst code I've ever written or the best
-// it'll look at all the arguments, find a -a flag, see if there is a
-// number to parse and try to parse it. It'll return none if it can't find
-// -a or the following number, and will return Some(Err(ParseIntError)) if the
-// "number" wont parse to a unsigned int
-fn parse_arguments() -> Option<Result<u32, ParseIntError>> {
-    args().enumerate()
-        .find(|(_, x)| *x == "-a".to_owned())
-        .and_then(|(i, _)| {
-            args().nth(i + 1).and_then(|n| {
-                Some(n.parse::<u32>())
-            })
-        })
 }

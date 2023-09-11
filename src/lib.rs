@@ -17,26 +17,12 @@ pub fn sqrt_aprox(n: f64, accuracy: u32) -> f64 {
     loop {
         guess = ((n / guess) + guess) / 2.0;
 
-        if difference(guess.powf(2.0), n) < accuracy {
+        if  (guess.powf(2.0) - n).abs() < accuracy {
             break;
         }
     }
 
     guess
-}
-
-use std::ops::Sub;
-/// C/C++'s fdim function. Will give the positive difference between two numbers. 
-/// Works with any type that implements Ordering and subtraction (as long as the answer is of the same type).
-/// Pretty self explanatory
-//I really only made this to clean up code
-pub fn difference<T>(a: T, b: T) -> T 
-where T: PartialOrd + Sub<Output = T> {
-    if a > b {
-        a-b
-    } else {
-        b-a
-    }
 }
 
 use std::env::args;

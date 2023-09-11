@@ -40,7 +40,7 @@ where T: PartialOrd + Sub<Output = T> {
 
 use std::env::args;
 use std::str::FromStr;
-use std::num::ParseIntError;
+//use std::num::ParseIntError;
 /// Will look through the program's arguments, looking for a specific 
 /// flag (ex: `-a`). Then it will see if there is a proceeding number to parse.
 /// 
@@ -54,11 +54,8 @@ use std::num::ParseIntError;
 /// //depending on the arguments given when running the program
 /// println!("{:?}", parse_arguments::<i32>("-c"))
 /// ```
-/// 
-/// this function currently only works with integers, or I guess any type that 
-/// implements FromStr where the error is a ParseIntError
-pub fn parse_arguments<T>(flag: &str) -> Option<Result<T, ParseIntError>> 
-where T: FromStr<Err = ParseIntError> {
+pub fn parse_arguments<T>(flag: &str) -> Option<Result<T, <T as FromStr>::Err>> 
+where T: FromStr {
     args().enumerate()
         .find(|(_, x)| *x == flag.to_owned())
         .and_then(|(i, _)| {

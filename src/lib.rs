@@ -1,6 +1,10 @@
 /// figures out the square root of a number to a certain number of digits (accuracy.)
 /// 
 /// Having a high accuracy (ex: 100) will make this function exponentially slower
+///
+/// If the function detects that it isn't going anywhere (Floating point weirdness is causing
+/// newtons method to repeatedly spit out the same thing), It will return the repeated root rather
+/// than hang.
 /// 
 /// # Examples
 /// 
@@ -13,11 +17,17 @@
 pub fn sqrt_aprox(n: f64, accuracy: u32) -> f64 {
     let mut guess = n / 2.0;
     let accuracy = 10_f64.powi(0 - accuracy as i32);
-
+    let mut prev;
     loop {
-        guess = ((n / guess) + guess) / 2.0;
+        prev = guess;
+        guess = ((n / prev) + prev) / 2.0;
 
         if  (guess.powf(2.0) - n).abs() < accuracy {
+            break;
+        }
+
+        if guess == prev {
+            eprintln!("Not possible to get a more accurate root. returning");
             break;
         }
     }

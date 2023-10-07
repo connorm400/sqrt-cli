@@ -4,7 +4,7 @@ use std::process;
 
 fn main() {
     // error and exit if there isn't a -a flag or it has a bad number
-    let accuracy = match parse_arguments::<u32>("-a") {
+    let accuracy: u32 = match parse_arguments("-a") {
         Some(Ok(n)) => n,
         Some(Err(_e)) => {
             eprintln!("error parsing -a flag: {_e:?}");
